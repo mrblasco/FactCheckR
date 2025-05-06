@@ -1,0 +1,23 @@
+Package: FactCheckR
+Title: Data Package from Fact Check Insights
+Version: 0.0.1
+Authors@R: 
+    person("Andrea", "Blasco", , "mrblasco@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Data package with number of claims by date and category from Fact Check Insights.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 2.10)
+LazyData: true
+Suggests: 
+    ggplot2,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: 
+    dplyr
+URL: https://github.com/mrblasco/FactCheckR
+BugReports: https://github.com/mrblasco/FactCheckR/issues

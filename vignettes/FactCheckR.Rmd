@@ -1,0 +1,47 @@
+---
+title: "FactCheckR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FactCheckR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r main, fig.width = 7, fig.height = 5}
+library(FactCheckR)
+library(dplyr)
+library(ggplot2)
+
+theme_set(theme_classic())
+
+fact_check_insights %>%
+  count(date_published, wt = n) %>%
+  filter(date_published > as.Date("2014-01-01")) %>%
+  ggplot(aes(x = date_published, y = n)) +
+  geom_point(size = 2, alpha = .75) +
+  facet_grid(~format(date_published, "%Y"), scales = "free") +
+  aes(color = format(date_published, "%A"),
+      pch = format(date_published, "%A")) +
+  scale_y_log10() +
+  scale_x_date(date_labels = "%b") +
+  geom_smooth(se = FALSE, method = "lm") +
+  labs(
+    x = NULL,
+    y = "Reviewed Claims",
+  ) +
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        axis.text.x = element_text(angle = 90, hjust = 1)) 
+  # geom_vline(
+  #   # March 2023, X Corp. established
+  #   xintercept = as.Date("2023-03-01"),
+  #   linetype = 2
+  # )
+```
