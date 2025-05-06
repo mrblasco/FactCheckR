@@ -99,8 +99,8 @@ process_review_rating <- function(x) {
     x %in% correct_terms ~ "Correct",
     x %in% lack_evidence_terms ~ "Lack evidence",
     x %in% satire_terms ~ "Satire",
-    x %in% c("") ~ "Missing",
-    TRUE ~ "Unrecognized"
+    x %in% c("") ~ "(Missing)",
+    TRUE ~ "(Unrecognized)"
   )
 
   factor(result)

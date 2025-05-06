@@ -22,7 +22,7 @@ check:
 	@echo "Checking package..."
 	$(R_CMD) -e "devtools::check()"
 
-install: build
+install:
 	@echo "Installing package..."
 	$(R_CMD) -e "devtools::install()"
 
