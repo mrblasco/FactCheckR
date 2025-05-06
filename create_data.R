@@ -126,6 +126,14 @@ fact_check_insights <- dplyr::tibble(
     review_rating_type = process_review_rating(review_rating)
   )
 
+# ---- detect language, cache = TRUE
+require(cld3)
+
+fact_check_insights <- fact_check_insights %>% 
+  mutate(
+    lang = factor(detect_language(claim_reviewed))
+  )
+
 
 # ---- show, echo = FALSE, results = "asis"
 
@@ -154,14 +162,14 @@ fact_check_insights %>%
 # ---- counts
 
 fact_check_insights_counts <- fact_check_insights %>%
-  count(date_published, author_name, review_rating_type) %>% 
+  count(date_published, author_name, 
+        review_rating_type, lang) %>% 
   mutate(date_published = as.Date(date_published)) %>% 
   dplyr::filter(!is.na(date_published), 
                 !is.na(author_name),
                 date_published < Sys.Date(),
                 date_published > as.Date("1990-01-01")) %>% 
   arrange(desc(date_published))
-
 
 head(fact_check_insights_counts) %>% 
   knitr::kable()
@@ -189,7 +197,8 @@ definitions <- list(
   review_rating = "Review Rating",
   review_rating_type = "Review rating type",
   n = "Number of claims",
-  url = "URL"
+  url = "URL",
+  lang = "Language Code (ISO 639-1)"
 )
 
 roller::document_data(
